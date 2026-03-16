@@ -1,14 +1,18 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
+  schemas  = ["finflow"]
 }
 
 enum UserRole {
   USER
   ADMIN
+
+  @@schema("finflow")
 }
 
 enum WalletType {
@@ -17,6 +21,8 @@ enum WalletType {
   EWALLET
   CARD
   OTHER
+
+  @@schema("finflow")
 }
 
 enum TransactionType {
@@ -24,6 +30,8 @@ enum TransactionType {
   EXPENSE
   GOAL_CONTRIBUTION
   ADJUSTMENT
+
+  @@schema("finflow")
 }
 
 model User {
@@ -57,6 +65,7 @@ model User {
   adminReports      AdminReport[]
 
   @@map("users")
+  @@schema("finflow")
 }
 
 model Wallet {
@@ -76,6 +85,7 @@ model Wallet {
 
   @@index([userId])
   @@map("wallets")
+  @@schema("finflow")
 }
 
 model Income {
@@ -96,6 +106,7 @@ model Income {
   @@index([userId, date])
   @@index([walletId])
   @@map("income")
+  @@schema("finflow")
 }
 
 model Expense {
@@ -118,6 +129,7 @@ model Expense {
   @@index([userId, date])
   @@index([walletId])
   @@map("expenses")
+  @@schema("finflow")
 }
 
 model Budget {
@@ -135,6 +147,7 @@ model Budget {
   @@unique([userId, category, month, year])
   @@index([userId, month, year])
   @@map("budgets")
+  @@schema("finflow")
 }
 
 model Goal {
@@ -151,6 +164,7 @@ model Goal {
 
   @@index([userId])
   @@map("goals")
+  @@schema("finflow")
 }
 
 model Transaction {
@@ -176,6 +190,7 @@ model Transaction {
   @@index([userId, date])
   @@index([walletId, date])
   @@map("transactions")
+  @@schema("finflow")
 }
 
 model Notification {
@@ -194,6 +209,7 @@ model Notification {
   @@index([userId, createdAt])
   @@index([broadcastId])
   @@map("notifications")
+  @@schema("finflow")
 }
 
 model NotificationBroadcast {
@@ -212,6 +228,7 @@ model NotificationBroadcast {
   @@index([createdAt])
   @@index([createdById, createdAt])
   @@map("notification_broadcasts")
+  @@schema("finflow")
 }
 
 model Settings {
@@ -225,6 +242,7 @@ model Settings {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("settings")
+  @@schema("finflow")
 }
 
 // ==================== ADMIN FEATURES ====================
@@ -234,6 +252,8 @@ enum TicketStatus {
   IN_PROGRESS
   RESOLVED
   CLOSED
+
+  @@schema("finflow")
 }
 
 enum TicketPriority {
@@ -241,18 +261,24 @@ enum TicketPriority {
   MEDIUM
   HIGH
   URGENT
+
+  @@schema("finflow")
 }
 
 enum ReportType {
   SYSTEM_OVERVIEW
   SUPPORT_OVERVIEW
   FINANCE_OVERVIEW
+
+  @@schema("finflow")
 }
 
 enum ReportStatus {
   DRAFT
   GENERATED
   FAILED
+
+  @@schema("finflow")
 }
 
 model SupportTicket {
@@ -274,6 +300,7 @@ model SupportTicket {
   @@index([userId])
   @@index([status])
   @@map("support_tickets")
+  @@schema("finflow")
 }
 
 model TicketReply {
@@ -289,6 +316,7 @@ model TicketReply {
 
   @@index([ticketId])
   @@map("ticket_replies")
+  @@schema("finflow")
 }
 
 model AdminLog {
@@ -306,6 +334,7 @@ model AdminLog {
   @@index([adminId])
   @@index([createdAt])
   @@map("admin_logs")
+  @@schema("finflow")
 }
 
 model AdminReport {
@@ -327,6 +356,7 @@ model AdminReport {
   @@index([createdById])
   @@index([createdAt])
   @@map("admin_reports")
+  @@schema("finflow")
 }
 
 model FeatureFlag {
@@ -339,6 +369,7 @@ model FeatureFlag {
   updatedAt   DateTime @updatedAt
 
   @@map("feature_flags")
+  @@schema("finflow")
 }
 
 model DefaultCategory {
@@ -354,4 +385,5 @@ model DefaultCategory {
 
   @@unique([name, type])
   @@map("default_categories")
+  @@schema("finflow")
 }

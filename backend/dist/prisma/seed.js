@@ -39,6 +39,21 @@ const pg_1 = require("pg");
 const bcrypt = __importStar(require("bcrypt"));
 const connectionString = process.env.DATABASE_URL ||
     'postgresql://postgres:0000@localhost:5432/fintech';
+const urlSchema = (() => {
+    try {
+        const url = new URL(connectionString);
+        const schema = url.searchParams.get('schema');
+        return schema || undefined;
+    }
+    catch {
+        return undefined;
+    }
+})();
+const schemaName = process.env.DATABASE_SCHEMA || urlSchema;
+const isSafeSchemaName = !schemaName || /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(schemaName);
+if (!isSafeSchemaName) {
+    throw new Error('Invalid DATABASE_SCHEMA (or schema= in DATABASE_URL). Use only letters, numbers, and underscores, starting with a letter or underscore.');
+}
 const forceSsl = (process.env.DATABASE_SSL ?? '').toLowerCase();
 const sslEnabledByEnv = forceSsl === '1' || forceSsl === 'true' || forceSsl === 'yes';
 const sslDisabledByEnv = forceSsl === '0' || forceSsl === 'false' || forceSsl === 'no';
@@ -59,7 +74,17 @@ if (!sslDisabledByEnv) {
     }
 }
 const pool = new pg_1.Pool({
-    connectionString,
+    connectionString: (() => {
+        try {
+            const url = new URL(connectionString);
+            url.searchParams.delete('sslmode');
+            return url.toString();
+        }
+        catch {
+            return connectionString;
+        }
+    })(),
+    ...(schemaName ? { options: `-c search_path=${schemaName}` } : {}),
     ...(shouldUseSsl ? { ssl: { rejectUnauthorized: false } } : {}),
 });
 const prisma = new client_1.PrismaClient({ adapter: new adapter_pg_1.PrismaPg(pool) });
