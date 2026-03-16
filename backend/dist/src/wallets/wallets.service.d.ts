@@ -5,8 +5,8 @@ export declare class WalletsService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     list(userId: string): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         type: import("@prisma/client").$Enums.WalletType;
@@ -15,8 +15,8 @@ export declare class WalletsService {
         userId: string;
     }[]>;
     create(userId: string, dto: CreateWalletDto): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         type: import("@prisma/client").$Enums.WalletType;
@@ -25,8 +25,8 @@ export declare class WalletsService {
         userId: string;
     }>;
     get(userId: string, id: string): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         type: import("@prisma/client").$Enums.WalletType;
@@ -35,8 +35,8 @@ export declare class WalletsService {
         userId: string;
     }>;
     update(userId: string, id: string, dto: UpdateWalletDto): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         type: import("@prisma/client").$Enums.WalletType;

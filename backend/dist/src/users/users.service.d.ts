@@ -8,32 +8,32 @@ export declare class UsersService {
         email: string;
         password: string;
     }): Promise<{
+        name: string;
         id: string;
         email: string;
-        name: string;
         avatar: string | null;
         role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;
     }>;
     findForAuthByEmail(email: string): Promise<{
+        name: string;
         id: string;
         email: string;
-        name: string;
         password: string;
         role: import("@prisma/client").$Enums.UserRole;
     } | null>;
     findPublicById(userId: string): Promise<{
+        name: string;
         id: string;
         email: string;
-        name: string;
         avatar: string | null;
         role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;
     }>;
     updateMe(userId: string, dto: UpdateMeDto): Promise<{
+        name: string;
         id: string;
         email: string;
-        name: string;
         avatar: string | null;
         role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;
@@ -46,9 +46,9 @@ export declare class UsersService {
         success: boolean;
     }>;
     setAvatar(userId: string, avatarUrl: string): Promise<{
+        name: string;
         id: string;
         email: string;
-        name: string;
         avatar: string | null;
         role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;

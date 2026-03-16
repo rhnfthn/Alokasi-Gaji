@@ -7,8 +7,8 @@ export declare class TransactionsController {
     constructor(transactionsService: TransactionsService);
     list(user: RequestUser, walletId?: string, type?: TransactionType): Promise<({
         wallet: {
-            id: string;
             name: string;
+            id: string;
             currency: string;
         };
     } & {
@@ -32,8 +32,8 @@ export declare class TransactionsController {
     }>;
     get(user: RequestUser, id: string): Promise<{
         wallet: {
-            id: string;
             name: string;
+            id: string;
             currency: string;
         };
         income: {

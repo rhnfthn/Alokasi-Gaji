@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { existsSync } from 'fs';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -24,10 +25,17 @@ import { CategoriesModule } from './categories/categories.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ServeStaticModule.forRoot({
-      rootPath: join(process.cwd(), process.env.UPLOADS_DIR ?? 'uploads'),
-      serveRoot: '/uploads',
-    }),
+    ...(() => {
+      const uploadsRoot = join(process.cwd(), process.env.UPLOADS_DIR ?? 'uploads');
+      if (!existsSync(uploadsRoot)) return [];
+
+      return [
+        ServeStaticModule.forRoot({
+          rootPath: uploadsRoot,
+          serveRoot: '/uploads',
+        }),
+      ];
+    })(),
     PrismaModule,
     AuthModule,
     UsersModule,

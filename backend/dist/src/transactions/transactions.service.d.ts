@@ -8,8 +8,8 @@ export declare class TransactionsService {
         type?: TransactionType;
     }): Promise<({
         wallet: {
-            id: string;
             name: string;
+            id: string;
             currency: string;
         };
     } & {
@@ -28,8 +28,8 @@ export declare class TransactionsService {
     })[]>;
     get(userId: string, id: string): Promise<{
         wallet: {
-            id: string;
             name: string;
+            id: string;
             currency: string;
         };
         income: {
