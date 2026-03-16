@@ -1,0 +1,33 @@
+{
+    "name":  "frontend",
+    "type":  "module",
+    "private":  true,
+    "imports":  {
+                    "#internal/nuxt/paths":  "./nuxt-internal/paths.mjs",
+                    "#app-manifest":  "./app-manifest.stub.mjs"
+                },
+    "scripts":  {
+                    "clean":  "node -e \"require(\u0027fs\u0027).rmSync(\u0027.nuxt\u0027,{recursive:true,force:true});require(\u0027fs\u0027).rmSync(\u0027.output\u0027,{recursive:true,force:true});\"",
+                    "build":  "nuxt build",
+                    "dev":  "nuxt dev --port 3100",
+                    "generate":  "nuxt generate",
+                    "preview":  "nuxt preview",
+                    "start":  "node .output/server/index.mjs",
+                    "postinstall":  "nuxt prepare"
+                },
+    "dependencies":  {
+                         "@pinia/nuxt":  "^0.11.3",
+                         "@vueuse/nuxt":  "^14.2.1",
+                         "chart.js":  "^4.5.1",
+                         "nuxt":  "^3.15.0",
+                         "vue":  "^3.5.30",
+                         "vue-chartjs":  "^5.3.3",
+                         "vue-router":  "^4.6.4"
+                     },
+    "devDependencies":  {
+                            "@nuxtjs/tailwindcss":  "^6.14.0",
+                            "autoprefixer":  "^10.4.27",
+                            "postcss":  "^8.5.8",
+                            "tailwindcss":  "^3.4.19"
+                        }
+}

@@ -1,0 +1,6 @@
+export declare class UpdateBudgetDto {
+    category?: string;
+    amount?: number;
+    month?: number;
+    year?: number;
+}
