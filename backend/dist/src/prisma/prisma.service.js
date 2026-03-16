@@ -20,7 +20,29 @@ let PrismaService = class PrismaService extends client_1.PrismaClient {
         if (!connectionString) {
             throw new Error('Missing DATABASE_URL env var');
         }
-        const pool = new pg_1.Pool({ connectionString });
+        const forceSsl = (process.env.DATABASE_SSL ?? '').toLowerCase();
+        const sslEnabledByEnv = forceSsl === '1' || forceSsl === 'true' || forceSsl === 'yes';
+        const sslDisabledByEnv = forceSsl === '0' || forceSsl === 'false' || forceSsl === 'no';
+        let shouldUseSsl = false;
+        if (!sslDisabledByEnv) {
+            if (sslEnabledByEnv) {
+                shouldUseSsl = true;
+            }
+            else {
+                try {
+                    const url = new URL(connectionString);
+                    const host = url.hostname;
+                    shouldUseSsl = host !== 'localhost' && host !== '127.0.0.1';
+                }
+                catch {
+                    shouldUseSsl = false;
+                }
+            }
+        }
+        const pool = new pg_1.Pool({
+            connectionString,
+            ...(shouldUseSsl ? { ssl: { rejectUnauthorized: false } } : {}),
+        });
         super({ adapter: new adapter_pg_1.PrismaPg(pool) });
     }
     async onModuleInit() {
