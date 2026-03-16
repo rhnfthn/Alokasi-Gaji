@@ -7,6 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:seed": "ts-node prisma/seed.ts",
     "db:count-default-categories": "node scripts/count-default-categories.cjs",
     "db:clear-default-categories": "node scripts/clear-default-categories.cjs",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

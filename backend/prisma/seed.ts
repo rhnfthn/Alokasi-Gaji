@@ -6,7 +6,32 @@ import * as bcrypt from 'bcrypt';
 const connectionString =
   process.env.DATABASE_URL ||
   'postgresql://postgres:0000@localhost:5432/fintech';
-const pool = new Pool({ connectionString });
+
+const forceSsl = (process.env.DATABASE_SSL ?? '').toLowerCase();
+const sslEnabledByEnv =
+  forceSsl === '1' || forceSsl === 'true' || forceSsl === 'yes';
+const sslDisabledByEnv =
+  forceSsl === '0' || forceSsl === 'false' || forceSsl === 'no';
+
+let shouldUseSsl = false;
+if (!sslDisabledByEnv) {
+  if (sslEnabledByEnv) {
+    shouldUseSsl = true;
+  } else {
+    try {
+      const url = new URL(connectionString);
+      const host = url.hostname;
+      shouldUseSsl = host !== 'localhost' && host !== '127.0.0.1';
+    } catch {
+      shouldUseSsl = false;
+    }
+  }
+}
+
+const pool = new Pool({
+  connectionString,
+  ...(shouldUseSsl ? { ssl: { rejectUnauthorized: false } } : {}),
+});
 const prisma = new PrismaClient({ adapter: new PrismaPg(pool) });
 
 async function main() {
