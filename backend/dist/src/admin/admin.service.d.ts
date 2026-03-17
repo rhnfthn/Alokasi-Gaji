@@ -17,9 +17,9 @@ export declare class AdminService {
             description: string | null;
             status: import("@prisma/client").$Enums.ReportStatus;
             createdBy: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
             dateFrom: Date | null;
             dateTo: Date | null;
@@ -42,9 +42,9 @@ export declare class AdminService {
         description: string | null;
         status: import("@prisma/client").$Enums.ReportStatus;
         createdBy: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         dateFrom: Date | null;
         dateTo: Date | null;
@@ -77,9 +77,9 @@ export declare class AdminService {
     private buildReportResult;
     getUserActivitySummary(userId: string): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
             role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
             updatedAt: Date;
@@ -96,9 +96,9 @@ export declare class AdminService {
     }>;
     getAllUsersOverview(page?: number, limit?: number): Promise<{
         users: {
-            name: string;
             id: string;
             email: string;
+            name: string;
             role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
             _count: {
@@ -115,9 +115,9 @@ export declare class AdminService {
     }>;
     createTicket(userId: string, dto: CreateTicketDto): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
     } & {
         id: string;
@@ -134,17 +134,17 @@ export declare class AdminService {
     getAllTickets(page?: number, limit?: number, status?: TicketStatus): Promise<{
         tickets: ({
             user: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
             _count: {
                 replies: number;
             };
             assignee: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             } | null;
         } & {
             id: string;
@@ -167,20 +167,20 @@ export declare class AdminService {
     }>;
     getTicketById(id: string): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         assignee: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         } | null;
         replies: ({
             user: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         } & {
             id: string;
@@ -204,14 +204,14 @@ export declare class AdminService {
     }>;
     updateTicket(id: string, adminId: string, dto: UpdateTicketDto): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         assignee: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         } | null;
     } & {
         id: string;
@@ -227,9 +227,9 @@ export declare class AdminService {
     }>;
     replyToTicket(ticketId: string, userId: string, dto: CreateTicketReplyDto, isAdmin: boolean): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
     } & {
         id: string;
@@ -246,9 +246,9 @@ export declare class AdminService {
             createdAt: Date;
             isAdminReply: boolean;
             user: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         }[];
     }>;
@@ -265,9 +265,9 @@ export declare class AdminService {
     getAdminLogs(page?: number, limit?: number, adminId?: string): Promise<{
         logs: ({
             admin: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         } & {
             id: string;
@@ -287,8 +287,8 @@ export declare class AdminService {
         };
     }>;
     createFeatureFlag(dto: CreateFeatureFlagDto, adminId: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -296,8 +296,8 @@ export declare class AdminService {
         enabled: boolean;
     }>;
     getAllFeatureFlags(): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -305,8 +305,8 @@ export declare class AdminService {
         enabled: boolean;
     }[]>;
     updateFeatureFlag(id: string, dto: UpdateFeatureFlagDto, adminId: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -314,8 +314,8 @@ export declare class AdminService {
         enabled: boolean;
     }>;
     toggleFeatureFlag(id: string, adminId: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -326,8 +326,8 @@ export declare class AdminService {
         message: string;
     }>;
     createDefaultCategory(dto: CreateDefaultCategoryDto, adminId: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -337,8 +337,8 @@ export declare class AdminService {
         sortOrder: number;
     }>;
     getAllDefaultCategories(): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -348,8 +348,8 @@ export declare class AdminService {
         sortOrder: number;
     }[]>;
     getDefaultCategoryById(id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -359,8 +359,8 @@ export declare class AdminService {
         sortOrder: number;
     }>;
     updateDefaultCategory(id: string, dto: UpdateDefaultCategoryDto, adminId: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -382,9 +382,9 @@ export declare class AdminService {
             status: string;
             createdAt: Date;
             createdBy: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
             recipients: number;
         }[];
@@ -400,15 +400,15 @@ export declare class AdminService {
             recipients: number;
             id: string;
             createdAt: Date;
-            audience: string;
             type: string;
             title: string;
             body: string;
+            audience: string;
             status: string;
             createdBy: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         };
     }>;

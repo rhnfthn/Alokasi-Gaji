@@ -8,16 +8,16 @@ export declare class TransactionsService {
         type?: TransactionType;
     }): Promise<({
         wallet: {
-            name: string;
             id: string;
+            name: string;
             currency: string;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        type: import("@prisma/client").$Enums.TransactionType;
         userId: string;
+        type: import("@prisma/client").$Enums.TransactionType;
         walletId: string;
         category: string | null;
         amount: import("@prisma/client-runtime-utils").Decimal;
@@ -28,8 +28,8 @@ export declare class TransactionsService {
     })[]>;
     get(userId: string, id: string): Promise<{
         wallet: {
-            name: string;
             id: string;
+            name: string;
             currency: string;
         };
         income: {
@@ -38,11 +38,11 @@ export declare class TransactionsService {
             updatedAt: Date;
             userId: string;
             walletId: string;
+            goalId: string | null;
             category: string;
             amount: import("@prisma/client-runtime-utils").Decimal;
             date: Date;
             note: string | null;
-            goalId: string | null;
         } | null;
         expense: {
             id: string;
@@ -61,8 +61,8 @@ export declare class TransactionsService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        type: import("@prisma/client").$Enums.TransactionType;
         userId: string;
+        type: import("@prisma/client").$Enums.TransactionType;
         walletId: string;
         category: string | null;
         amount: import("@prisma/client-runtime-utils").Decimal;

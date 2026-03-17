@@ -11,9 +11,9 @@ export declare class AuthController {
     constructor(authService: AuthService, usersService: UsersService);
     register(dto: RegisterDto): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
             avatar: string | null;
             role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
@@ -22,9 +22,9 @@ export declare class AuthController {
     }>;
     login(dto: LoginDto): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
             avatar: string | null;
             role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
@@ -42,9 +42,9 @@ export declare class AuthController {
         success: boolean;
     }>;
     profile(user: RequestUser): Promise<{
-        name: string;
         id: string;
         email: string;
+        name: string;
         avatar: string | null;
         role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;

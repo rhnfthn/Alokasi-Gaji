@@ -6,9 +6,9 @@ export declare class SupportController {
     constructor(supportService: SupportService);
     createTicket(user: RequestUser, dto: CreateTicketDto): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
     } & {
         id: string;
@@ -28,8 +28,8 @@ export declare class SupportController {
                 replies: number;
             };
             assignee: {
-                name: string;
                 id: string;
+                name: string;
             } | null;
         } & {
             id: string;
@@ -52,18 +52,18 @@ export declare class SupportController {
     }>;
     getTicket(user: RequestUser, id: string): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         assignee: {
-            name: string;
             id: string;
+            name: string;
         } | null;
         replies: ({
             user: {
-                name: string;
                 id: string;
+                name: string;
                 role: import("@prisma/client").$Enums.UserRole;
             };
         } & {
@@ -88,8 +88,8 @@ export declare class SupportController {
     }>;
     addReply(user: RequestUser, ticketId: string, dto: CreateReplyDto): Promise<{
         user: {
-            name: string;
             id: string;
+            name: string;
             role: import("@prisma/client").$Enums.UserRole;
         };
     } & {

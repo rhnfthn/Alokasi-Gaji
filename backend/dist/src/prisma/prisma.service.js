@@ -15,6 +15,7 @@ const client_1 = require("@prisma/client");
 const adapter_pg_1 = require("@prisma/adapter-pg");
 const pg_1 = require("pg");
 let PrismaService = class PrismaService extends client_1.PrismaClient {
+    pool;
     constructor() {
         const connectionString = process.env.DATABASE_URL;
         if (!connectionString) {
@@ -64,18 +65,22 @@ let PrismaService = class PrismaService extends client_1.PrismaClient {
                 return connectionString;
             }
         })();
-        const pool = new pg_1.Pool({
+        this.pool = new pg_1.Pool({
             connectionString: poolConnectionString,
+            max: 10,
+            idleTimeoutMillis: 30000,
+            connectionTimeoutMillis: 10000,
             ...(schemaName ? { options: `-c search_path=${schemaName}` } : {}),
             ...(shouldUseSsl ? { ssl: { rejectUnauthorized: false } } : {}),
         });
-        super({ adapter: new adapter_pg_1.PrismaPg(pool) });
+        super({ adapter: new adapter_pg_1.PrismaPg(this.pool) });
     }
     async onModuleInit() {
         await this.$connect();
     }
     async onModuleDestroy() {
         await this.$disconnect();
+        await this.pool.end();
     }
 };
 exports.PrismaService = PrismaService;

@@ -6,44 +6,44 @@ export declare class WalletsController {
     private readonly walletsService;
     constructor(walletsService: WalletsService);
     list(user: RequestUser): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         type: import("@prisma/client").$Enums.WalletType;
         balance: import("@prisma/client-runtime-utils").Decimal;
         currency: string;
-        userId: string;
     }[]>;
     create(user: RequestUser, dto: CreateWalletDto): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         type: import("@prisma/client").$Enums.WalletType;
         balance: import("@prisma/client-runtime-utils").Decimal;
         currency: string;
-        userId: string;
     }>;
     get(user: RequestUser, id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         type: import("@prisma/client").$Enums.WalletType;
         balance: import("@prisma/client-runtime-utils").Decimal;
         currency: string;
-        userId: string;
     }>;
     update(user: RequestUser, id: string, dto: UpdateWalletDto): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         type: import("@prisma/client").$Enums.WalletType;
         balance: import("@prisma/client-runtime-utils").Decimal;
         currency: string;
-        userId: string;
     }>;
     remove(user: RequestUser, id: string): Promise<{
         success: boolean;

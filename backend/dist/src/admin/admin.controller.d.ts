@@ -24,9 +24,9 @@ export declare class AdminController {
     }>;
     getAllUsersOverview(page?: string, limit?: string): Promise<{
         users: {
-            name: string;
             id: string;
             email: string;
+            name: string;
             role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
             _count: {
@@ -43,9 +43,9 @@ export declare class AdminController {
     }>;
     getUserActivitySummary(id: string): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
             role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
             updatedAt: Date;
@@ -67,26 +67,26 @@ export declare class AdminController {
             createdAt: Date;
             isAdminReply: boolean;
             user: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         }[];
     }>;
     getAllTickets(page?: string, limit?: string, status?: TicketStatus): Promise<{
         tickets: ({
             user: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
             _count: {
                 replies: number;
             };
             assignee: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             } | null;
         } & {
             id: string;
@@ -109,20 +109,20 @@ export declare class AdminController {
     }>;
     getTicketById(id: string): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         assignee: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         } | null;
         replies: ({
             user: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         } & {
             id: string;
@@ -146,14 +146,14 @@ export declare class AdminController {
     }>;
     updateTicket(id: string, dto: UpdateTicketDto, user: RequestUser): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         assignee: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         } | null;
     } & {
         id: string;
@@ -169,9 +169,9 @@ export declare class AdminController {
     }>;
     replyToTicket(ticketId: string, dto: CreateTicketReplyDto, user: RequestUser): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
     } & {
         id: string;
@@ -184,9 +184,9 @@ export declare class AdminController {
     getAdminLogs(page?: string, limit?: string, adminId?: string): Promise<{
         logs: ({
             admin: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         } & {
             id: string;
@@ -215,9 +215,9 @@ export declare class AdminController {
             description: string | null;
             status: import("@prisma/client").$Enums.ReportStatus;
             createdBy: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
             dateFrom: Date | null;
             dateTo: Date | null;
@@ -251,9 +251,9 @@ export declare class AdminController {
         description: string | null;
         status: import("@prisma/client").$Enums.ReportStatus;
         createdBy: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         dateFrom: Date | null;
         dateTo: Date | null;
@@ -273,8 +273,8 @@ export declare class AdminController {
         generatedAt: Date | null;
     }>;
     getAllFeatureFlags(): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -282,8 +282,8 @@ export declare class AdminController {
         enabled: boolean;
     }[]>;
     createFeatureFlag(dto: CreateFeatureFlagDto, user: RequestUser): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -291,8 +291,8 @@ export declare class AdminController {
         enabled: boolean;
     }>;
     updateFeatureFlag(id: string, dto: UpdateFeatureFlagDto, user: RequestUser): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -300,8 +300,8 @@ export declare class AdminController {
         enabled: boolean;
     }>;
     toggleFeatureFlag(id: string, user: RequestUser): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -312,8 +312,8 @@ export declare class AdminController {
         message: string;
     }>;
     getAllDefaultCategories(): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -323,8 +323,8 @@ export declare class AdminController {
         sortOrder: number;
     }[]>;
     getDefaultCategoryById(id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -334,8 +334,8 @@ export declare class AdminController {
         sortOrder: number;
     }>;
     createDefaultCategory(dto: CreateDefaultCategoryDto, user: RequestUser): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -345,8 +345,8 @@ export declare class AdminController {
         sortOrder: number;
     }>;
     updateDefaultCategory(id: string, dto: UpdateDefaultCategoryDto, user: RequestUser): Promise<{
-        name: string;
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
         type: string;
@@ -368,9 +368,9 @@ export declare class AdminController {
             status: string;
             createdAt: Date;
             createdBy: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
             recipients: number;
         }[];
@@ -386,15 +386,15 @@ export declare class AdminController {
             recipients: number;
             id: string;
             createdAt: Date;
-            audience: string;
             type: string;
             title: string;
             body: string;
+            audience: string;
             status: string;
             createdBy: {
-                name: string;
                 id: string;
                 email: string;
+                name: string;
             };
         };
     }>;

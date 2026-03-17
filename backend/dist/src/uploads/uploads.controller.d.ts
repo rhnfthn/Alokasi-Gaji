@@ -16,9 +16,9 @@ export declare class UploadsController {
         success: boolean;
         url: string | undefined;
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
             avatar: string | null;
             role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;

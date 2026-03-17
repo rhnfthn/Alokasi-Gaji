@@ -5,9 +5,9 @@ export declare class SupportService {
     constructor(prisma: PrismaService);
     createTicket(userId: string, dto: CreateTicketDto): Promise<{
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
     } & {
         id: string;
@@ -27,8 +27,8 @@ export declare class SupportService {
                 replies: number;
             };
             assignee: {
-                name: string;
                 id: string;
+                name: string;
             } | null;
         } & {
             id: string;
@@ -51,18 +51,18 @@ export declare class SupportService {
     }>;
     getTicketById(ticketId: string, userId: string): Promise<({
         user: {
-            name: string;
             id: string;
             email: string;
+            name: string;
         };
         assignee: {
-            name: string;
             id: string;
+            name: string;
         } | null;
         replies: ({
             user: {
-                name: string;
                 id: string;
+                name: string;
                 role: import("@prisma/client").$Enums.UserRole;
             };
         } & {
@@ -87,8 +87,8 @@ export declare class SupportService {
     }) | null>;
     addReply(ticketId: string, userId: string, dto: CreateReplyDto): Promise<{
         user: {
-            name: string;
             id: string;
+            name: string;
             role: import("@prisma/client").$Enums.UserRole;
         };
     } & {
