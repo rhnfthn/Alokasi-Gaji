@@ -67,11 +67,15 @@ export class PrismaService
       }
     })();
 
+    // Use smaller pool for serverless environments (Vercel, AWS Lambda, etc.)
+    const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+    const maxPoolSize = isServerless ? 1 : 10;
+
     this.pool = new Pool({
       connectionString: poolConnectionString,
-      max: 10, // Maximum number of clients in the pool
-      idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
-      connectionTimeoutMillis: 10000, // Connection timeout
+      max: maxPoolSize,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
       ...(schemaName ? { options: `-c search_path=${schemaName}` } : {}),
       ...(shouldUseSsl ? { ssl: { rejectUnauthorized: false } } : {}),
     });
