@@ -39,7 +39,7 @@ export default defineNuxtConfig({
     strict: true,
   },
   hooks: {
-    'vite:extendConfig'(config) {
+    'vite:extendConfig'(config, { isClient }) {
       config.plugins ??= [];
       config.plugins.unshift({
         name: 'stub-app-manifest',
@@ -53,6 +53,11 @@ export default defineNuxtConfig({
           return null;
         },
       });
+
+      if (isClient) {
+        config.build ??= {};
+        config.build.manifest ??= 'manifest.json';
+      }
     },
   },
 });

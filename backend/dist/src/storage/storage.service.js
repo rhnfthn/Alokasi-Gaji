@@ -19,7 +19,8 @@ let StorageService = class StorageService {
     constructor(configService) {
         this.configService = configService;
         const supabaseUrl = this.configService.get('SUPABASE_URL');
-        const supabaseKey = this.configService.get('SUPABASE_SERVICE_ROLE_KEY');
+        const supabaseKey = this.configService.get('SUPABASE_SERVICE_ROLE_KEY') ??
+            this.configService.get('STORAGE_SUPABASE_SERVICE_ROLE_KEY');
         if (supabaseUrl && supabaseKey) {
             this.supabase = (0, supabase_js_1.createClient)(supabaseUrl, supabaseKey);
         }
