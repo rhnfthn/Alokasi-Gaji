@@ -81,8 +81,18 @@ let PrismaService = class PrismaService extends client_1.PrismaClient {
         await this.$connect();
     }
     async onModuleDestroy() {
-        await this.$disconnect();
-        await this.pool.end();
+        try {
+            await this.$disconnect();
+        }
+        catch (error) {
+            console.error('Error disconnecting Prisma:', error);
+        }
+        try {
+            await this.pool.end();
+        }
+        catch (error) {
+            console.error('Error ending pool:', error);
+        }
     }
 };
 exports.PrismaService = PrismaService;

@@ -5,7 +5,10 @@ const common_1 = require("@nestjs/common");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    app.enableShutdownHooks();
+    const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+    if (!isServerless) {
+        app.enableShutdownHooks();
+    }
     app.useGlobalPipes(new common_1.ValidationPipe({
         whitelist: true,
         transform: true,

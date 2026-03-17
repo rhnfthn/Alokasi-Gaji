@@ -5,8 +5,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable graceful shutdown
-  app.enableShutdownHooks();
+  // Enable graceful shutdown only in non-serverless environments
+  const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+  if (!isServerless) {
+    app.enableShutdownHooks();
+  }
 
   app.useGlobalPipes(
     new ValidationPipe({
