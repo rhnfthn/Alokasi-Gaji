@@ -17,6 +17,7 @@ class CreateIncomeDto {
     amount;
     date;
     note;
+    goalId;
 }
 exports.CreateIncomeDto = CreateIncomeDto;
 __decorate([
@@ -40,4 +41,9 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateIncomeDto.prototype, "note", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], CreateIncomeDto.prototype, "goalId", void 0);
 //# sourceMappingURL=create-income.dto.js.map

@@ -15,6 +15,27 @@ export declare class BudgetsController {
         amount: import("@prisma/client-runtime-utils").Decimal;
         month: number;
     }[]>;
+    getAnalytics(user: RequestUser, month?: string, year?: string): Promise<{
+        month: number;
+        year: number;
+        budgets: {
+            id: string;
+            category: string;
+            budgetAmount: number;
+            actualAmount: number;
+            difference: number;
+            percentage: number;
+            status: "safe" | "warning" | "danger";
+        }[];
+        unbudgetedExpenses: {
+            category: string;
+            actualAmount: number;
+            budgetAmount: number;
+            difference: number;
+            percentage: number;
+            status: "danger";
+        }[];
+    }>;
     create(user: RequestUser, dto: CreateBudgetDto): Promise<{
         id: string;
         createdAt: Date;

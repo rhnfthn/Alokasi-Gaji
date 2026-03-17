@@ -6,21 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UploadsModule = void 0;
+exports.StorageModule = void 0;
 const common_1 = require("@nestjs/common");
-const config_1 = require("@nestjs/config");
-const users_module_1 = require("../users/users.module");
-const storage_module_1 = require("../storage/storage.module");
-const uploads_controller_1 = require("./uploads.controller");
-const uploads_service_1 = require("./uploads.service");
-let UploadsModule = class UploadsModule {
+const storage_service_1 = require("./storage.service");
+let StorageModule = class StorageModule {
 };
-exports.UploadsModule = UploadsModule;
-exports.UploadsModule = UploadsModule = __decorate([
+exports.StorageModule = StorageModule;
+exports.StorageModule = StorageModule = __decorate([
     (0, common_1.Module)({
-        imports: [config_1.ConfigModule, users_module_1.UsersModule, storage_module_1.StorageModule],
-        controllers: [uploads_controller_1.UploadsController],
-        providers: [uploads_service_1.UploadsService],
+        providers: [storage_service_1.StorageService],
+        exports: [storage_service_1.StorageService],
     })
-], UploadsModule);
-//# sourceMappingURL=uploads.module.js.map
+], StorageModule);
+//# sourceMappingURL=storage.module.js.map

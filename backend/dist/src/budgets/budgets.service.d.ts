@@ -37,4 +37,25 @@ export declare class BudgetsService {
     remove(userId: string, id: string): Promise<{
         success: boolean;
     }>;
+    getAnalytics(userId: string, month: number, year: number): Promise<{
+        month: number;
+        year: number;
+        budgets: {
+            id: string;
+            category: string;
+            budgetAmount: number;
+            actualAmount: number;
+            difference: number;
+            percentage: number;
+            status: "safe" | "warning" | "danger";
+        }[];
+        unbudgetedExpenses: {
+            category: string;
+            actualAmount: number;
+            budgetAmount: number;
+            difference: number;
+            percentage: number;
+            status: "danger";
+        }[];
+    }>;
 }

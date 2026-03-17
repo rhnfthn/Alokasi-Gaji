@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { existsSync } from 'fs';
+import { mkdirSync } from 'fs';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -26,8 +26,11 @@ import { CategoriesModule } from './categories/categories.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ...(() => {
-      const uploadsRoot = join(process.cwd(), process.env.UPLOADS_DIR ?? 'uploads');
-      if (!existsSync(uploadsRoot)) return [];
+      const uploadsRoot = join(
+        process.cwd(),
+        process.env.UPLOADS_DIR ?? 'uploads',
+      );
+      mkdirSync(uploadsRoot, { recursive: true });
 
       return [
         ServeStaticModule.forRoot({

@@ -14,6 +14,7 @@ export declare class IncomeService {
         amount: import("@prisma/client-runtime-utils").Decimal;
         date: Date;
         note: string | null;
+        goalId: string | null;
     }[]>;
     create(userId: string, dto: CreateIncomeDto): Promise<{
         id: string;
@@ -25,6 +26,7 @@ export declare class IncomeService {
         amount: import("@prisma/client-runtime-utils").Decimal;
         date: Date;
         note: string | null;
+        goalId: string | null;
     }>;
     update(userId: string, id: string, dto: UpdateIncomeDto): Promise<{
         id: string;
@@ -36,6 +38,7 @@ export declare class IncomeService {
         amount: import("@prisma/client-runtime-utils").Decimal;
         date: Date;
         note: string | null;
+        goalId: string | null;
     } | null>;
     remove(userId: string, id: string): Promise<{
         success: boolean;

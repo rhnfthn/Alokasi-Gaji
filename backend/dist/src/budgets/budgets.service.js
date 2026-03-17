@@ -73,6 +73,73 @@ let BudgetsService = class BudgetsService {
         await this.prisma.budget.delete({ where: { id } });
         return { success: true };
     }
+    async getAnalytics(userId, month, year) {
+        const budgets = await this.prisma.budget.findMany({
+            where: { userId, month, year },
+            orderBy: { category: 'asc' },
+        });
+        const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
+        const endDate = new Date(Date.UTC(year, month, 1, 0, 0, 0));
+        const expenses = await this.prisma.expense.groupBy({
+            by: ['category'],
+            where: {
+                userId,
+                date: {
+                    gte: startDate,
+                    lt: endDate,
+                },
+            },
+            _sum: {
+                amount: true,
+            },
+        });
+        const expenseMap = new Map();
+        expenses.forEach((e) => {
+            expenseMap.set(e.category, Number(e._sum.amount ?? 0));
+        });
+        const analytics = budgets.map((budget) => {
+            const budgetAmount = Number(budget.amount);
+            const actualAmount = expenseMap.get(budget.category) ?? 0;
+            const difference = budgetAmount - actualAmount;
+            const percentage = budgetAmount > 0 ? (actualAmount / budgetAmount) * 100 : 0;
+            let status;
+            if (percentage <= 75) {
+                status = 'safe';
+            }
+            else if (percentage <= 100) {
+                status = 'warning';
+            }
+            else {
+                status = 'danger';
+            }
+            return {
+                id: budget.id,
+                category: budget.category,
+                budgetAmount,
+                actualAmount,
+                difference,
+                percentage: Math.min(percentage, 150),
+                status,
+            };
+        });
+        const budgetCategories = new Set(budgets.map((b) => b.category));
+        const unbududgetedExpenses = expenses
+            .filter((e) => !budgetCategories.has(e.category))
+            .map((e) => ({
+            category: e.category,
+            actualAmount: Number(e._sum.amount ?? 0),
+            budgetAmount: 0,
+            difference: -Number(e._sum.amount ?? 0),
+            percentage: 0,
+            status: 'danger',
+        }));
+        return {
+            month,
+            year,
+            budgets: analytics,
+            unbudgetedExpenses: unbududgetedExpenses,
+        };
+    }
 };
 exports.BudgetsService = BudgetsService;
 exports.BudgetsService = BudgetsService = __decorate([

@@ -27,6 +27,12 @@ let BudgetsController = class BudgetsController {
     async list(user) {
         return this.budgetsService.list(user.sub);
     }
+    async getAnalytics(user, month, year) {
+        const now = new Date();
+        const m = month ? parseInt(month, 10) : now.getMonth() + 1;
+        const y = year ? parseInt(year, 10) : now.getFullYear();
+        return this.budgetsService.getAnalytics(user.sub, m, y);
+    }
     async create(user, dto) {
         return this.budgetsService.create(user.sub, dto);
     }
@@ -46,6 +52,16 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], BudgetsController.prototype, "list", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('analytics'),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Query)('month')),
+    __param(2, (0, common_1.Query)('year')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, String]),
+    __metadata("design:returntype", Promise)
+], BudgetsController.prototype, "getAnalytics", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)(),

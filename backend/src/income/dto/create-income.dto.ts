@@ -22,4 +22,8 @@ export class CreateIncomeDto {
   @IsOptional()
   @IsString()
   note?: string;
+
+  @IsOptional()
+  @IsUUID()
+  goalId?: string;
 }

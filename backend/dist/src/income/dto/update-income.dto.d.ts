@@ -4,4 +4,5 @@ export declare class UpdateIncomeDto {
     amount?: number;
     date?: string;
     note?: string;
+    goalId?: string;
 }

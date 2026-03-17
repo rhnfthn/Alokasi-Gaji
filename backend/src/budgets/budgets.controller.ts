@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
@@ -23,6 +24,19 @@ export class BudgetsController {
   @Get()
   async list(@CurrentUser() user: RequestUser) {
     return this.budgetsService.list(user.sub);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('analytics')
+  async getAnalytics(
+    @CurrentUser() user: RequestUser,
+    @Query('month') month?: string,
+    @Query('year') year?: string,
+  ) {
+    const now = new Date();
+    const m = month ? parseInt(month, 10) : now.getMonth() + 1;
+    const y = year ? parseInt(year, 10) : now.getFullYear();
+    return this.budgetsService.getAnalytics(user.sub, m, y);
   }
 
   @UseGuards(JwtAuthGuard)

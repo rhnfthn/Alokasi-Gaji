@@ -42,6 +42,7 @@ export declare class TransactionsService {
             amount: import("@prisma/client-runtime-utils").Decimal;
             date: Date;
             note: string | null;
+            goalId: string | null;
         } | null;
         expense: {
             id: string;
