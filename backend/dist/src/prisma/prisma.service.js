@@ -67,7 +67,7 @@ let PrismaService = class PrismaService extends client_1.PrismaClient {
         })();
         const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
         const maxPoolSize = isServerless ? 1 : 10;
-        this.pool = new pg_1.Pool({
+        const pool = new pg_1.Pool({
             connectionString: poolConnectionString,
             max: maxPoolSize,
             idleTimeoutMillis: 30000,
@@ -75,7 +75,8 @@ let PrismaService = class PrismaService extends client_1.PrismaClient {
             ...(schemaName ? { options: `-c search_path=${schemaName}` } : {}),
             ...(shouldUseSsl ? { ssl: { rejectUnauthorized: false } } : {}),
         });
-        super({ adapter: new adapter_pg_1.PrismaPg(this.pool) });
+        super({ adapter: new adapter_pg_1.PrismaPg(pool) });
+        this.pool = pool;
     }
     async onModuleInit() {
         await this.$connect();

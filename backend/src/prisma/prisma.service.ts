@@ -71,7 +71,7 @@ export class PrismaService
     const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
     const maxPoolSize = isServerless ? 1 : 10;
 
-    this.pool = new Pool({
+    const pool = new Pool({
       connectionString: poolConnectionString,
       max: maxPoolSize,
       idleTimeoutMillis: 30000,
@@ -79,7 +79,8 @@ export class PrismaService
       ...(schemaName ? { options: `-c search_path=${schemaName}` } : {}),
       ...(shouldUseSsl ? { ssl: { rejectUnauthorized: false } } : {}),
     });
-    super({ adapter: new PrismaPg(this.pool) });
+    super({ adapter: new PrismaPg(pool) });
+    this.pool = pool;
   }
 
   async onModuleInit() {
