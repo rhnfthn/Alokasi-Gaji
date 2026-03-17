@@ -26,11 +26,17 @@ export class UploadsController {
   ) {}
 
   private async uploadLocal(category: 'receipts' | 'avatars', file: Express.Multer.File) {
-    const dir = this.uploadsService.ensureDir(category);
-    const filename = this.uploadsService.makeFilename(file.originalname);
-    const fullPath = join(dir, filename);
-    await writeFile(fullPath, file.buffer);
-    return this.uploadsService.publicUrl(category, filename);
+    try {
+      const dir = this.uploadsService.ensureDir(category);
+      const filename = this.uploadsService.makeFilename(file.originalname);
+      const fullPath = join(dir, filename);
+      await writeFile(fullPath, file.buffer);
+      return this.uploadsService.publicUrl(category, filename);
+    } catch {
+      throw new BadRequestException(
+        'Local uploads are not available in this environment. Configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.',
+      );
+    }
   }
 
   @UseGuards(JwtAuthGuard)

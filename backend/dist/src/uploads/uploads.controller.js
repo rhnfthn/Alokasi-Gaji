@@ -33,11 +33,16 @@ let UploadsController = class UploadsController {
         this.uploadsService = uploadsService;
     }
     async uploadLocal(category, file) {
-        const dir = this.uploadsService.ensureDir(category);
-        const filename = this.uploadsService.makeFilename(file.originalname);
-        const fullPath = (0, path_1.join)(dir, filename);
-        await (0, promises_1.writeFile)(fullPath, file.buffer);
-        return this.uploadsService.publicUrl(category, filename);
+        try {
+            const dir = this.uploadsService.ensureDir(category);
+            const filename = this.uploadsService.makeFilename(file.originalname);
+            const fullPath = (0, path_1.join)(dir, filename);
+            await (0, promises_1.writeFile)(fullPath, file.buffer);
+            return this.uploadsService.publicUrl(category, filename);
+        }
+        catch {
+            throw new common_1.BadRequestException('Local uploads are not available in this environment. Configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.');
+        }
     }
     async uploadReceipt(file) {
         if (!file) {

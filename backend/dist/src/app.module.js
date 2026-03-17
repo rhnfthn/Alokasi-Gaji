@@ -39,13 +39,18 @@ exports.AppModule = AppModule = __decorate([
             config_1.ConfigModule.forRoot({ isGlobal: true }),
             ...(() => {
                 const uploadsRoot = (0, path_1.join)(process.cwd(), process.env.UPLOADS_DIR ?? 'uploads');
-                (0, fs_1.mkdirSync)(uploadsRoot, { recursive: true });
-                return [
-                    serve_static_1.ServeStaticModule.forRoot({
-                        rootPath: uploadsRoot,
-                        serveRoot: '/uploads',
-                    }),
-                ];
+                try {
+                    (0, fs_1.mkdirSync)(uploadsRoot, { recursive: true });
+                    return [
+                        serve_static_1.ServeStaticModule.forRoot({
+                            rootPath: uploadsRoot,
+                            serveRoot: '/uploads',
+                        }),
+                    ];
+                }
+                catch {
+                    return [];
+                }
             })(),
             prisma_module_1.PrismaModule,
             auth_module_1.AuthModule,

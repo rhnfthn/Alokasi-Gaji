@@ -30,14 +30,22 @@ import { CategoriesModule } from './categories/categories.module';
         process.cwd(),
         process.env.UPLOADS_DIR ?? 'uploads',
       );
-      mkdirSync(uploadsRoot, { recursive: true });
 
-      return [
-        ServeStaticModule.forRoot({
-          rootPath: uploadsRoot,
-          serveRoot: '/uploads',
-        }),
-      ];
+      try {
+        // On some serverless providers (e.g. Vercel), the filesystem under process.cwd()
+        // can be read-only (e.g. /var/task). Don't crash the server if local uploads
+        // aren't possible; simply skip static serving.
+        mkdirSync(uploadsRoot, { recursive: true });
+
+        return [
+          ServeStaticModule.forRoot({
+            rootPath: uploadsRoot,
+            serveRoot: '/uploads',
+          }),
+        ];
+      } catch {
+        return [];
+      }
     })(),
     PrismaModule,
     AuthModule,
