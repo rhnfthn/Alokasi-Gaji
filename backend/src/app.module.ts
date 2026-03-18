@@ -14,6 +14,7 @@ import { ExpensesModule } from './expenses/expenses.module';
 import { BudgetsModule } from './budgets/budgets.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { GoalsModule } from './goals/goals.module';
+import { GoalContributionsModule } from './goal-contributions/goal-contributions.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { SettingsModule } from './settings/settings.module';
@@ -56,6 +57,7 @@ import { CategoriesModule } from './categories/categories.module';
     BudgetsModule,
     TransactionsModule,
     GoalsModule,
+    GoalContributionsModule,
     AnalyticsModule,
     NotificationsModule,
     SettingsModule,

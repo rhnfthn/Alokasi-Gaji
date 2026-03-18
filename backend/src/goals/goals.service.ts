@@ -10,6 +10,20 @@ export class GoalsService {
   async list(userId: string) {
     return this.prisma.goal.findMany({
       where: { userId },
+      include: {
+        contributions: {
+          orderBy: { date: 'desc' },
+          take: 5, // Latest 5 contributions per goal
+          include: {
+            wallet: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
       orderBy: { createdAt: 'desc' },
     });
   }

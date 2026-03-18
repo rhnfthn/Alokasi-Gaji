@@ -7,16 +7,16 @@ export declare class TransactionsController {
     constructor(transactionsService: TransactionsService);
     list(user: RequestUser, walletId?: string, type?: TransactionType): Promise<({
         wallet: {
-            id: string;
             name: string;
+            id: string;
             currency: string;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string;
         type: import("@prisma/client").$Enums.TransactionType;
+        userId: string;
         walletId: string;
         category: string | null;
         amount: import("@prisma/client-runtime-utils").Decimal;
@@ -32,8 +32,8 @@ export declare class TransactionsController {
     }>;
     get(user: RequestUser, id: string): Promise<{
         wallet: {
-            id: string;
             name: string;
+            id: string;
             currency: string;
         };
         income: {
@@ -42,7 +42,6 @@ export declare class TransactionsController {
             updatedAt: Date;
             userId: string;
             walletId: string;
-            goalId: string | null;
             category: string;
             amount: import("@prisma/client-runtime-utils").Decimal;
             date: Date;
@@ -65,8 +64,8 @@ export declare class TransactionsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string;
         type: import("@prisma/client").$Enums.TransactionType;
+        userId: string;
         walletId: string;
         category: string | null;
         amount: import("@prisma/client-runtime-utils").Decimal;

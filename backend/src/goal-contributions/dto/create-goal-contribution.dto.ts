@@ -6,12 +6,12 @@ import {
   IsUUID,
 } from 'class-validator';
 
-export class CreateIncomeDto {
+export class CreateGoalContributionDto {
+  @IsUUID()
+  goalId!: string;
+
   @IsUUID()
   walletId!: string;
-
-  @IsString()
-  category!: string;
 
   @IsNumber()
   amount!: number;

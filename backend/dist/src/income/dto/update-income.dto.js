@@ -17,7 +17,6 @@ class UpdateIncomeDto {
     amount;
     date;
     note;
-    goalId;
 }
 exports.UpdateIncomeDto = UpdateIncomeDto;
 __decorate([
@@ -45,9 +44,4 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdateIncomeDto.prototype, "note", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], UpdateIncomeDto.prototype, "goalId", void 0);
 //# sourceMappingURL=update-income.dto.js.map

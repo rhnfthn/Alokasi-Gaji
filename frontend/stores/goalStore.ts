@@ -7,6 +7,16 @@
   deadline?: string | null;
   createdAt?: string;
   updatedAt?: string;
+  contributions?: {
+    id: string;
+    amount: string | number;
+    date: string;
+    note?: string | null;
+    wallet: {
+      id: string;
+      name: string;
+    };
+  }[];
 };
 
 export const useGoalStore = defineStore('goals', () => {

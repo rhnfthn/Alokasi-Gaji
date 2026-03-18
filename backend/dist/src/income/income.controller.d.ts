@@ -11,7 +11,6 @@ export declare class IncomeController {
         updatedAt: Date;
         userId: string;
         walletId: string;
-        goalId: string | null;
         category: string;
         amount: import("@prisma/client-runtime-utils").Decimal;
         date: Date;
@@ -23,7 +22,6 @@ export declare class IncomeController {
         updatedAt: Date;
         userId: string;
         walletId: string;
-        goalId: string | null;
         category: string;
         amount: import("@prisma/client-runtime-utils").Decimal;
         date: Date;
@@ -35,7 +33,6 @@ export declare class IncomeController {
         updatedAt: Date;
         userId: string;
         walletId: string;
-        goalId: string | null;
         category: string;
         amount: import("@prisma/client-runtime-utils").Decimal;
         date: Date;

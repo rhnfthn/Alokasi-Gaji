@@ -23,17 +23,6 @@ export class IncomeService {
       throw new NotFoundException('Wallet not found');
     }
 
-    // Validate goal if goalId provided
-    if (dto.goalId) {
-      const goal = await this.prisma.goal.findFirst({
-        where: { id: dto.goalId, userId },
-        select: { id: true },
-      });
-      if (!goal) {
-        throw new NotFoundException('Goal not found');
-      }
-    }
-
     const date = new Date(dto.date);
 
     const [income] = await this.prisma.$transaction(async (tx) => {
@@ -41,7 +30,6 @@ export class IncomeService {
         data: {
           userId,
           walletId: dto.walletId,
-          goalId: dto.goalId,
           category: dto.category,
           amount: dto.amount,
           date,
@@ -54,14 +42,6 @@ export class IncomeService {
         data: { balance: { increment: dto.amount } },
       });
 
-      // Update goal if goalId provided
-      if (dto.goalId) {
-        await tx.goal.update({
-          where: { id: dto.goalId },
-          data: { savedAmount: { increment: dto.amount } },
-        });
-      }
-
       return [createdIncome];
     });
 
@@ -69,7 +49,7 @@ export class IncomeService {
       data: {
         userId,
         walletId: dto.walletId,
-        type: dto.goalId ? 'GOAL_CONTRIBUTION' : 'INCOME',
+        type: 'INCOME',
         category: dto.category,
         amount: dto.amount,
         date,
@@ -90,7 +70,6 @@ export class IncomeService {
     }
 
     const nextWalletId = dto.walletId ?? existing.walletId;
-    const nextGoalId = dto.goalId !== undefined ? dto.goalId : existing.goalId;
     const nextAmount = dto.amount ?? Number(existing.amount);
     const nextCategory = dto.category ?? existing.category;
     const nextDate = dto.date ? new Date(dto.date) : existing.date;
@@ -104,27 +83,14 @@ export class IncomeService {
       throw new NotFoundException('Wallet not found');
     }
 
-    // Validate new goal if provided
-    if (nextGoalId) {
-      const goal = await this.prisma.goal.findFirst({
-        where: { id: nextGoalId, userId },
-        select: { id: true },
-      });
-      if (!goal) {
-        throw new NotFoundException('Goal not found');
-      }
-    }
-
     const oldAmount = Number(existing.amount);
     const oldWalletId = existing.walletId;
-    const oldGoalId = existing.goalId;
 
     await this.prisma.$transaction(async (tx) => {
       await tx.income.update({
         where: { id },
         data: {
           walletId: nextWalletId,
-          goalId: nextGoalId,
           amount: nextAmount,
           category: nextCategory,
           date: nextDate,
@@ -152,38 +118,11 @@ export class IncomeService {
         });
       }
 
-      // Handle goal savedAmount changes
-      if (oldGoalId !== nextGoalId) {
-        // Remove from old goal
-        if (oldGoalId) {
-          await tx.goal.update({
-            where: { id: oldGoalId },
-            data: { savedAmount: { decrement: oldAmount } },
-          });
-        }
-        // Add to new goal
-        if (nextGoalId) {
-          await tx.goal.update({
-            where: { id: nextGoalId },
-            data: { savedAmount: { increment: nextAmount } },
-          });
-        }
-      } else if (oldGoalId && nextGoalId) {
-        // Same goal, but amount changed
-        const diff = nextAmount - oldAmount;
-        if (diff !== 0) {
-          await tx.goal.update({
-            where: { id: nextGoalId },
-            data: { savedAmount: { increment: diff } },
-          });
-        }
-      }
-
       await tx.transaction.updateMany({
         where: { incomeId: id, userId },
         data: {
           walletId: nextWalletId,
-          type: nextGoalId ? 'GOAL_CONTRIBUTION' : 'INCOME',
+          type: 'INCOME',
           category: nextCategory,
           amount: nextAmount,
           date: nextDate,
@@ -211,14 +150,6 @@ export class IncomeService {
         where: { id: existing.walletId },
         data: { balance: { decrement: amount } },
       });
-
-      // Decrement goal savedAmount if linked to a goal
-      if (existing.goalId) {
-        await tx.goal.update({
-          where: { id: existing.goalId },
-          data: { savedAmount: { decrement: amount } },
-        });
-      }
     });
 
     return { success: true };

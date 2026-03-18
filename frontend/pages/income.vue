@@ -97,32 +97,10 @@
                   v-model="form.category"
                   class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
                   required
-                  @change="onCategoryChange"
                 >
                   <option value="">Select category</option>
                   <option v-for="c in categories" :key="c.id" :value="c.name">{{ c.name }}</option>
                 </select>
-              </div>
-
-              <!-- Goal Selector (shown when Goal Contribution category selected) -->
-              <div v-if="showGoalSelector">
-                <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Select Goal
-                  <span class="text-red-500">*</span>
-                </label>
-                <select
-                  v-model="form.goalId"
-                  class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
-                  required
-                >
-                  <option value="">Select goal</option>
-                  <option v-for="g in goalStore.goals" :key="g.id" :value="g.id">
-                    {{ g.title }} ({{ formatRupiah(g.savedAmount) }} / {{ formatRupiah(g.targetAmount) }})
-                  </option>
-                </select>
-                <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  This income will contribute to your selected goal
-                </p>
               </div>
 
               <div>
@@ -179,29 +157,14 @@
 <script setup lang="ts">
 const walletStore = useWalletStore();
 const incomeStore = useIncomeStore();
-const goalStore = useGoalStore();
 
 const showModal = ref(false);
 const form = ref({
   walletId: '',
   category: '',
-  goalId: '',
   amount: 0,
   date: new Date().toISOString().slice(0, 10)
 });
-
-// Show goal selector when category is "Goal Contribution" or similar
-const showGoalSelector = computed(() => {
-  const cat = form.value.category.toLowerCase();
-  return cat.includes('goal') || cat === 'tabungan' || cat === 'saving';
-});
-
-// Reset goalId when category changes
-function onCategoryChange() {
-  if (!showGoalSelector.value) {
-    form.value.goalId = '';
-  }
-}
 
 const amountText = ref('');
 watch(
@@ -242,7 +205,6 @@ async function refresh() {
   await Promise.all([
     walletStore.fetchAll(),
     incomeStore.fetchAll(),
-    goalStore.fetchAll(),
     fetchCategories()
   ]);
 }
@@ -253,26 +215,15 @@ async function create() {
   error.value = '';
   loading.value = true;
   try {
-    const payload: any = {
+    await incomeStore.create({
       walletId: form.value.walletId,
       category: form.value.category,
       amount: form.value.amount,
       date: form.value.date,
-    };
-
-    // Add goalId if selected
-    if (form.value.goalId) {
-      payload.goalId = form.value.goalId;
-    }
-
-    await incomeStore.create(payload);
+    });
     form.value.category = '';
-    form.value.goalId = '';
     form.value.amount = 0;
     showModal.value = false;
-
-    // Refresh goals to see updated savedAmount
-    await goalStore.fetchAll();
   } catch (e: any) {
     error.value = e?.data?.message ?? e?.message ?? 'Create failed';
   } finally {

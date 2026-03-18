@@ -23,6 +23,7 @@ const expenses_module_1 = require("./expenses/expenses.module");
 const budgets_module_1 = require("./budgets/budgets.module");
 const transactions_module_1 = require("./transactions/transactions.module");
 const goals_module_1 = require("./goals/goals.module");
+const goal_contributions_module_1 = require("./goal-contributions/goal-contributions.module");
 const analytics_module_1 = require("./analytics/analytics.module");
 const notifications_module_1 = require("./notifications/notifications.module");
 const settings_module_1 = require("./settings/settings.module");
@@ -61,6 +62,7 @@ exports.AppModule = AppModule = __decorate([
             budgets_module_1.BudgetsModule,
             transactions_module_1.TransactionsModule,
             goals_module_1.GoalsModule,
+            goal_contributions_module_1.GoalContributionsModule,
             analytics_module_1.AnalyticsModule,
             notifications_module_1.NotificationsModule,
             settings_module_1.SettingsModule,

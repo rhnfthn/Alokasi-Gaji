@@ -6,17 +6,17 @@ export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     me(user: RequestUser): Promise<{
+        name: string;
         id: string;
         email: string;
-        name: string;
         avatar: string | null;
         role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;
     }>;
     updateMe(user: RequestUser, dto: UpdateMeDto): Promise<{
+        name: string;
         id: string;
         email: string;
-        name: string;
         avatar: string | null;
         role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;

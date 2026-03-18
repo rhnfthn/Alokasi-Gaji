@@ -20,6 +20,20 @@ let GoalsService = class GoalsService {
     async list(userId) {
         return this.prisma.goal.findMany({
             where: { userId },
+            include: {
+                contributions: {
+                    orderBy: { date: 'desc' },
+                    take: 5,
+                    include: {
+                        wallet: {
+                            select: {
+                                id: true,
+                                name: true,
+                            },
+                        },
+                    },
+                },
+            },
             orderBy: { createdAt: 'desc' },
         });
     }

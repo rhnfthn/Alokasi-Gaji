@@ -9,35 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateIncomeDto = void 0;
+exports.CreateGoalContributionDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateIncomeDto {
+class CreateGoalContributionDto {
+    goalId;
     walletId;
-    category;
     amount;
     date;
     note;
 }
-exports.CreateIncomeDto = CreateIncomeDto;
+exports.CreateGoalContributionDto = CreateGoalContributionDto;
 __decorate([
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
-], CreateIncomeDto.prototype, "walletId", void 0);
+], CreateGoalContributionDto.prototype, "goalId", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
-], CreateIncomeDto.prototype, "category", void 0);
+], CreateGoalContributionDto.prototype, "walletId", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], CreateIncomeDto.prototype, "amount", void 0);
+], CreateGoalContributionDto.prototype, "amount", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
-], CreateIncomeDto.prototype, "date", void 0);
+], CreateGoalContributionDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateIncomeDto.prototype, "note", void 0);
-//# sourceMappingURL=create-income.dto.js.map
+], CreateGoalContributionDto.prototype, "note", void 0);
+//# sourceMappingURL=create-goal-contribution.dto.js.map
