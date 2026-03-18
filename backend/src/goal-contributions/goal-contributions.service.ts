@@ -69,9 +69,8 @@ export class GoalContributionsService {
 
     const date = new Date(dto.date);
 
-    // Create contribution in transaction
-    const contribution = await this.prisma.$transaction(async (tx) => {
-      const created = await tx.goalContribution.create({
+    const [createdContribution] = await this.prisma.$transaction([
+      this.prisma.goalContribution.create({
         data: {
           userId: normalizedUserId,
           goalId: dto.goalId,
@@ -80,26 +79,18 @@ export class GoalContributionsService {
           date,
           note: dto.note,
         },
-        include: {
-          goal: true,
-          wallet: true,
-        },
-      });
-
-      // Decrement wallet balance
-      await tx.wallet.update({
+      }),
+      this.prisma.wallet.update({
         where: { id: dto.walletId },
         data: { balance: { decrement: dto.amount } },
-      });
+      }),
 
-      // Increment goal savedAmount
-      await tx.goal.update({
+      this.prisma.goal.update({
         where: { id: dto.goalId },
         data: { savedAmount: { increment: dto.amount } },
-      });
+      }),
 
-      // Create transaction record
-      await tx.transaction.create({
+      this.prisma.transaction.create({
         data: {
           userId: normalizedUserId,
           walletId: dto.walletId,
@@ -108,12 +99,16 @@ export class GoalContributionsService {
           date,
           note: dto.note,
         },
-      });
+      }),
+    ]);
 
-      return created;
+    return this.prisma.goalContribution.findUniqueOrThrow({
+      where: { id: createdContribution.id },
+      include: {
+        goal: true,
+        wallet: true,
+      },
     });
-
-    return contribution;
   }
 
   async remove(userId: string, id: string) {
@@ -127,21 +122,18 @@ export class GoalContributionsService {
 
     const amount = Number(existing.amount);
 
-    await this.prisma.$transaction(async (tx) => {
-      await tx.goalContribution.delete({ where: { id } });
-
-      // Return balance to wallet
-      await tx.wallet.update({
+    await this.prisma.$transaction([
+      this.prisma.goalContribution.delete({ where: { id } }),
+      this.prisma.wallet.update({
         where: { id: existing.walletId },
         data: { balance: { increment: amount } },
-      });
+      }),
 
-      // Decrement goal savedAmount
-      await tx.goal.update({
+      this.prisma.goal.update({
         where: { id: existing.goalId },
         data: { savedAmount: { decrement: amount } },
-      });
-    });
+      }),
+    ]);
 
     return { success: true };
   }

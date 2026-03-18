@@ -68,8 +68,8 @@ let GoalContributionsService = class GoalContributionsService {
             throw new common_1.NotFoundException('Goal not found');
         }
         const date = new Date(dto.date);
-        const contribution = await this.prisma.$transaction(async (tx) => {
-            const created = await tx.goalContribution.create({
+        const [createdContribution] = await this.prisma.$transaction([
+            this.prisma.goalContribution.create({
                 data: {
                     userId: normalizedUserId,
                     goalId: dto.goalId,
@@ -78,20 +78,16 @@ let GoalContributionsService = class GoalContributionsService {
                     date,
                     note: dto.note,
                 },
-                include: {
-                    goal: true,
-                    wallet: true,
-                },
-            });
-            await tx.wallet.update({
+            }),
+            this.prisma.wallet.update({
                 where: { id: dto.walletId },
                 data: { balance: { decrement: dto.amount } },
-            });
-            await tx.goal.update({
+            }),
+            this.prisma.goal.update({
                 where: { id: dto.goalId },
                 data: { savedAmount: { increment: dto.amount } },
-            });
-            await tx.transaction.create({
+            }),
+            this.prisma.transaction.create({
                 data: {
                     userId: normalizedUserId,
                     walletId: dto.walletId,
@@ -100,10 +96,15 @@ let GoalContributionsService = class GoalContributionsService {
                     date,
                     note: dto.note,
                 },
-            });
-            return created;
+            }),
+        ]);
+        return this.prisma.goalContribution.findUniqueOrThrow({
+            where: { id: createdContribution.id },
+            include: {
+                goal: true,
+                wallet: true,
+            },
         });
-        return contribution;
     }
     async remove(userId, id) {
         const normalizedUserId = this.normalizeUserId(userId);
@@ -114,17 +115,17 @@ let GoalContributionsService = class GoalContributionsService {
             throw new common_1.NotFoundException('Goal contribution not found');
         }
         const amount = Number(existing.amount);
-        await this.prisma.$transaction(async (tx) => {
-            await tx.goalContribution.delete({ where: { id } });
-            await tx.wallet.update({
+        await this.prisma.$transaction([
+            this.prisma.goalContribution.delete({ where: { id } }),
+            this.prisma.wallet.update({
                 where: { id: existing.walletId },
                 data: { balance: { increment: amount } },
-            });
-            await tx.goal.update({
+            }),
+            this.prisma.goal.update({
                 where: { id: existing.goalId },
                 data: { savedAmount: { decrement: amount } },
-            });
-        });
+            }),
+        ]);
         return { success: true };
     }
 };
