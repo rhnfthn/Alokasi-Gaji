@@ -157,6 +157,7 @@
 <script setup lang="ts">
 const walletStore = useWalletStore();
 const incomeStore = useIncomeStore();
+const route = useRoute();
 
 const showModal = ref(false);
 const form = ref({
@@ -181,6 +182,14 @@ function onAmountInput() {
 const loading = ref(false);
 const error = ref('');
 const categories = ref<{ id: string; name: string; type: string; icon?: string; color?: string }[]>([]);
+
+watch(
+  () => route.query.create,
+  (create) => {
+    showModal.value = create === '1' || create === 'true';
+  },
+  { immediate: true },
+);
 
 function walletName(id: string) {
   return walletStore.wallets.find((w) => w.id === id)?.name ?? id;

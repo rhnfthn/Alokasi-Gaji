@@ -244,6 +244,7 @@
 const walletStore = useWalletStore();
 const expenseStore = useExpenseStore();
 const authStore = useAuthStore();
+const route = useRoute();
 
 const { formatRupiah, parseRupiah } = useRupiah();
 
@@ -271,6 +272,14 @@ const loading = ref(false);
 const error = ref('');
 const receiptUrl = ref('');
 const categories = ref<{ id: string; name: string; type: string; icon?: string; color?: string }[]>([]);
+
+watch(
+  () => route.query.create,
+  (create) => {
+    showModal.value = create === '1' || create === 'true';
+  },
+  { immediate: true },
+);
 
 function isImageUrl(url: string) {
   return /\.(png|jpe?g|gif|webp|bmp|svg)(\?|#|$)/i.test(url);

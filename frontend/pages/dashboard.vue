@@ -72,7 +72,7 @@
     <!-- Main Grid -->
     <div class="grid gap-6 lg:grid-cols-3">
       <!-- Wallets -->
-      <div class="lg:col-span-2">
+      <div class="space-y-6 lg:col-span-2">
         <div class="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
           <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-5 py-4">
             <h2 class="font-medium text-gray-900 dark:text-gray-100">My Wallets</h2>
@@ -116,50 +116,52 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Quick Actions & Goals -->
-      <div class="space-y-6">
-        <!-- Quick Actions -->
+        <!-- Wallet Shortcuts -->
         <div class="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-          <h3 class="mb-4 font-medium text-gray-900 dark:text-gray-100">Quick Actions</h3>
-          <div class="grid grid-cols-2 gap-2">
-            <NuxtLink to="/income" class="flex flex-col items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+          <h3 class="mb-4 font-medium text-gray-900 dark:text-gray-100">Wallet Shortcuts</h3>
+          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <NuxtLink to="/income?create=1" class="flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
               <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20">
                 <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
               </div>
-              <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Add Income</span>
+              <span>Add Income</span>
             </NuxtLink>
-            <NuxtLink to="/expenses" class="flex flex-col items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+
+            <NuxtLink to="/expenses?create=1" class="flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
               <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/20">
                 <svg class="h-4 w-4 text-red-600 dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                 </svg>
               </div>
-              <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Add Expense</span>
+              <span>Add Expense</span>
             </NuxtLink>
-            <NuxtLink to="/budgets" class="flex flex-col items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+
+            <NuxtLink to="/budgets" class="flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
               <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20">
                 <svg class="h-4 w-4 text-blue-600 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
               </div>
-              <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Set Budget</span>
+              <span>Open Budget</span>
             </NuxtLink>
-            <NuxtLink to="/analytics" class="flex flex-col items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
-              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 dark:bg-purple-900/20">
-                <svg class="h-4 w-4 text-purple-600 dark:text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+
+            <NuxtLink to="/goals" class="flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 p-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-900/20">
+                <svg class="h-4 w-4 text-amber-600 dark:text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.98 10.101c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                 </svg>
               </div>
-              <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Analytics</span>
+              <span>Open Goals</span>
             </NuxtLink>
           </div>
         </div>
+      </div>
 
-        <!-- Goals -->
+      <!-- Goals -->
+      <div>
         <div class="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
           <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-5 py-4">
             <h3 class="font-medium text-gray-900 dark:text-gray-100">Savings Goals</h3>
