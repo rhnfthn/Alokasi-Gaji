@@ -42,19 +42,6 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
             </svg>
           </button>
-
-          <!-- Search -->
-          <div class="relative hidden md:block">
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Search..."
-              class="h-9 w-56 rounded-lg border border-gray-200 bg-gray-50 pl-9 pr-3 text-sm placeholder-gray-400 focus:border-gray-300 focus:bg-white focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-gray-600 dark:focus:bg-gray-900"
-            />
-            <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
         </div>
 
         <div class="flex items-center gap-2">
@@ -157,7 +144,6 @@ const { $api } = useNuxtApp();
 const sidebarOpen = ref(false);
 const sidebarCollapsed = ref(false);
 const profileOpen = ref(false);
-const searchQuery = ref('');
 const isDark = ref(false);
 
 const avatarSrc = computed(() => {

@@ -1,114 +1,87 @@
 <template>
-  <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
-    <div class="layout-container flex h-full grow flex-col">
-      <header
-        class="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4 dark:border-slate-800 dark:bg-slate-900 md:px-20"
-      >
-        <div class="flex items-center gap-3 text-slate-900 dark:text-slate-100">
-          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white">
-            <span class="material-symbols-outlined text-xl">account_balance_wallet</span>
-          </div>
-          <h2 class="text-xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white">FinFlow</h2>
-        </div>
-        <div class="flex items-center gap-4">
-          <button
-            type="button"
-            class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400"
-          >
-            <span class="material-symbols-outlined">help</span>
-          </button>
-        </div>
-      </header>
+  <div class="relative isolate min-h-screen overflow-hidden bg-gradient-to-b from-sky-200 via-sky-100 to-white px-4 py-10 sm:px-6">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -left-24 top-10 h-72 w-72 rounded-full bg-white/60 blur-3xl" />
+      <div class="absolute -right-20 top-20 h-80 w-80 rounded-full bg-sky-300/40 blur-3xl" />
+      <div class="absolute bottom-[-14rem] left-1/2 h-96 w-[44rem] -translate-x-1/2 rounded-[50%] border border-white/50 bg-white/70 blur-sm" />
+    </div>
 
-      <main class="flex flex-1 items-center justify-center p-6">
-        <!-- Form state -->
-        <div
-          v-if="!submitted"
-          class="w-full max-w-[480px] space-y-8 rounded-xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-12"
-        >
-          <div class="flex flex-col gap-2">
-            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <span class="material-symbols-outlined text-3xl text-primary">lock_reset</span>
-            </div>
-            <h1 class="text-3xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">Forgot password?</h1>
-            <p class="text-base font-normal leading-relaxed text-slate-500 dark:text-slate-400">
-              No worries, it happens to the best of us. Enter your email and we'll send you a secure link to reset your account access.
-            </p>
+    <div class="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-md items-center justify-center">
+      <div class="w-full rounded-3xl border border-white/70 bg-white/85 p-6 shadow-[0_20px_60px_-20px_rgba(15,23,42,0.35)] backdrop-blur md:p-8">
+        <template v-if="!submitted">
+          <div class="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <rect x="5" y="11" width="14" height="10" rx="2" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 11V8a4 4 0 0 1 8 0v3" />
+            </svg>
           </div>
 
-          <form class="space-y-6" @submit.prevent="onSubmit">
-            <div class="space-y-2">
-              <label class="text-sm font-semibold leading-normal text-slate-900 dark:text-slate-200">Email address</label>
-              <div class="relative">
-                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">mail</span>
-                <input
-                  v-model.trim="email"
-                  class="h-14 w-full rounded-lg border border-slate-200 bg-white pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
-                  placeholder="e.g. name@company.com"
-                  required
-                  type="email"
-                  autocomplete="email"
-                />
-              </div>
+          <h1 class="text-center text-2xl font-semibold tracking-tight text-slate-900">Forgot password?</h1>
+          <p class="mt-2 text-center text-sm text-slate-500">Enter your email and we will send a reset link.</p>
+
+          <form class="mt-7 space-y-4" @submit.prevent="onSubmit">
+            <div class="relative">
+              <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5h18v9H3z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m3 8 9 6 9-6" />
+                </svg>
+              </span>
+              <input
+                v-model.trim="email"
+                type="email"
+                autocomplete="email"
+                required
+                placeholder="Email"
+                class="h-11 w-full rounded-xl border border-slate-200 bg-white/95 pl-10 pr-3 text-sm text-slate-800 placeholder-slate-400 outline-none ring-0 transition focus:border-slate-400"
+              />
             </div>
 
-            <div
-              v-if="message"
-              class="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950/30 dark:text-slate-200"
-            >
+            <div v-if="message" class="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
               {{ message }}
             </div>
 
             <button
-              class="flex h-14 w-full items-center justify-center rounded-lg bg-primary text-base font-bold leading-normal text-white shadow-lg shadow-primary/20 transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
               type="submit"
+              class="mt-1 flex h-11 w-full items-center justify-center rounded-xl bg-gradient-to-b from-slate-800 to-slate-950 text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgba(15,23,42,0.9)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
               :disabled="loading"
             >
-              <span>{{ loading ? 'Sending…' : 'Send reset link' }}</span>
-              <span class="material-symbols-outlined ml-2 text-lg">arrow_forward</span>
+              {{ loading ? 'Sending...' : 'Send reset link' }}
             </button>
           </form>
 
-          <div class="flex flex-col items-center gap-4 border-t border-slate-100 pt-4 dark:border-slate-800">
-            <NuxtLink class="group flex items-center text-sm font-semibold text-primary hover:underline" to="/auth/login">
-              <span class="material-symbols-outlined mr-2 text-base transition-transform group-hover:-translate-x-1">arrow_back</span>
-              Back to login
-            </NuxtLink>
-          </div>
-        </div>
-
-        <!-- Success state -->
-        <div
-          v-else
-          class="w-full max-w-[480px] space-y-6 rounded-xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-12"
-        >
-          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-            <span class="material-symbols-outlined text-4xl text-green-600">check_circle</span>
-          </div>
-          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Check your email</h2>
-          <p class="text-slate-500 dark:text-slate-400">
-            We've sent a password reset link to <span class="font-semibold text-slate-900 dark:text-white">{{ email }}</span>. Please check your inbox and spam folder.
+          <p class="mt-5 text-center text-sm text-slate-500">
+            Remember your password?
+            <NuxtLink to="/auth/login" class="font-semibold text-slate-800 hover:underline">Back to login</NuxtLink>
           </p>
+        </template>
+
+        <template v-else>
+          <div class="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-md">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+
+          <h2 class="text-center text-2xl font-semibold tracking-tight text-slate-900">Check your email</h2>
+          <p class="mt-2 text-center text-sm text-slate-500">
+            We sent a reset link to <span class="font-semibold text-slate-800">{{ email }}</span>.
+          </p>
+
           <button
-            class="h-12 w-full rounded-lg border border-slate-200 font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
             type="button"
+            class="mt-7 h-11 w-full rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
             :disabled="loading"
             @click="onResend"
           >
-            {{ loading ? 'Resending…' : 'Resend email' }}
+            {{ loading ? 'Resending...' : 'Resend email' }}
           </button>
-          <NuxtLink class="inline-flex items-center text-sm font-semibold text-primary hover:underline" to="/auth/login">
-            Back to login
-          </NuxtLink>
-        </div>
-      </main>
 
-      <footer class="p-8 text-center">
-        <p class="text-xs text-slate-400">
-          ©  FinFlow Inc. All rights reserved. |
-          <a class="underline hover:text-primary" href="#">Privacy Policy</a>
-        </p>
-      </footer>
+          <p class="mt-5 text-center text-sm text-slate-500">
+            <NuxtLink to="/auth/login" class="font-semibold text-slate-800 hover:underline">Back to login</NuxtLink>
+          </p>
+        </template>
+      </div>
     </div>
   </div>
 </template>

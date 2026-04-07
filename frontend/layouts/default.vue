@@ -2,7 +2,7 @@
   <div class="flex min-h-screen bg-gray-50 dark:bg-gray-950 font-display">
     <!-- Sidebar -->
     <aside
-      class="fixed left-0 top-0 z-40 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-200"
+      class="fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-gray-200 bg-white transition-all duration-200 dark:border-gray-800 dark:bg-gray-900"
       :class="[
         sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
         sidebarCollapsed ? 'w-16' : 'w-60',
@@ -17,7 +17,7 @@
       </div>
 
       <!-- Navigation -->
-      <nav class="h-[calc(100vh-3.5rem)] overflow-y-auto p-3">
+      <nav class="flex-1 overflow-y-auto p-3">
         <!-- Main -->
         <div class="mb-4">
           <p v-if="!sidebarCollapsed" class="mb-2 px-3 text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">Main</p>
@@ -90,21 +90,22 @@
           </ul>
         </div>
 
-        <!-- Logout -->
-        <div class="border-t border-gray-200 dark:border-gray-800 pt-3">
-          <button
-            type="button"
-            :class="[
-              'flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20',
-              sidebarCollapsed ? 'justify-center' : 'gap-3',
-            ]"
-            @click="handleLogout"
-          >
-            <IconLogout class="h-5 w-5 flex-shrink-0" />
-            <span v-if="!sidebarCollapsed">Logout</span>
-          </button>
-        </div>
       </nav>
+
+      <!-- Logout -->
+      <div class="shrink-0 border-t border-gray-200 p-3 dark:border-gray-800">
+        <button
+          type="button"
+          :class="[
+            'flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20',
+            sidebarCollapsed ? 'justify-center' : 'gap-3',
+          ]"
+          @click="handleLogout"
+        >
+          <IconLogout class="h-5 w-5 flex-shrink-0" />
+          <span v-if="!sidebarCollapsed">Logout</span>
+        </button>
+      </div>
     </aside>
 
     <!-- Mobile Overlay -->
@@ -144,18 +145,6 @@
             </svg>
           </button>
 
-          <!-- Search -->
-          <div class="relative hidden md:block">
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Search..."
-              class="h-9 w-56 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 pl-9 pr-3 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:border-gray-300 dark:focus:border-gray-600 focus:bg-white dark:focus:bg-gray-900 focus:outline-none"
-            />
-            <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
         </div>
 
         <div class="flex items-center gap-2">
@@ -314,7 +303,6 @@ const token = useCookie('access_token');
 const sidebarOpen = ref(false);
 const sidebarCollapsed = ref(false);
 const profileOpen = ref(false);
-const searchQuery = ref('');
 const isDark = ref(false);
 const unreadNotifications = ref(0);
 

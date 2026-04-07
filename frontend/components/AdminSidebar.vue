@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="fixed left-0 top-0 z-40 h-screen bg-white border-r border-gray-200 transition-all duration-200 dark:bg-gray-900 dark:border-gray-800"
+    class="fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-gray-200 bg-white transition-all duration-200 dark:border-gray-800 dark:bg-gray-900"
     :class="[
       open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
       collapsed ? 'w-16' : 'w-60',
@@ -18,7 +18,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="h-[calc(100vh-3.5rem)] overflow-y-auto p-3">
+    <nav class="flex-1 overflow-y-auto p-3">
       <!-- Main -->
       <div class="mb-4">
         <p v-if="!collapsed" class="mb-2 px-3 text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">Main</p>
@@ -94,21 +94,22 @@
         </ul>
       </div>
 
-      <!-- Logout -->
-      <div class="border-t border-gray-200 dark:border-gray-800 pt-3">
-        <button
-          type="button"
-          :class="[
-            'flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20',
-            collapsed ? 'justify-center' : 'gap-3',
-          ]"
-          @click="emit('logout')"
-        >
-          <IconLogout class="h-5 w-5 flex-shrink-0" />
-          <span v-if="!collapsed">Logout</span>
-        </button>
-      </div>
     </nav>
+
+    <!-- Logout -->
+    <div class="shrink-0 border-t border-gray-200 p-3 dark:border-gray-800">
+      <button
+        type="button"
+        :class="[
+          'flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20',
+          collapsed ? 'justify-center' : 'gap-3',
+        ]"
+        @click="emit('logout')"
+      >
+        <IconLogout class="h-5 w-5 flex-shrink-0" />
+        <span v-if="!collapsed">Logout</span>
+      </button>
+    </div>
   </aside>
 </template>
 
